@@ -13,7 +13,8 @@ createServer({
           id: 1,
           title: 'transaction 1',
           amount: 400,
-          type: ''
+          type: 'deposit',
+          category: 'food',
         }
       ]
     })
