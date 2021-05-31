@@ -7,8 +7,19 @@ import { TransactionContext } from "../../TransactionsContext";
 
 export function Summary() {
 
-    const data = useContext(TransactionContext);
-    console.log(data);
+    const { transactions } = useContext(TransactionContext);
+
+    const summary = transactions.reduce((acc, transaction) => {
+        if (transaction.type === 'deposit') {
+            acc.deposits += transaction.amount;
+            acc.total += transaction.amount;
+        }
+        if (transaction.type === 'withdraw') {
+            acc.withdraw += transaction.amount;
+            acc.total -= transaction.amount;
+        }
+        return acc;
+    }, { deposits: 0, withdraw: 0, total: 0 });
 
     return (
         <Container>
@@ -17,21 +28,33 @@ export function Summary() {
                     <p>Entradas</p>
                     <img src={incomeImg} alt="Entradas" />
                 </header>
-                <strong>R$ 1000,00</strong>
+                <strong>{
+                    new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                    }).format(summary.deposits)
+                }</strong>
             </div>
             <div>
                 <header>
                     <p>Saídas</p>
                     <img src={outcomeImg} alt="Saídas" />
                 </header>
-                <strong>R$ 500,00</strong>
+                <strong>-{
+                    new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                    }).format(summary.withdraw)}</strong>
             </div>
-            <div>
+            <div className="highlight-background">
                 <header>
                     <p>Total</p>
                     <img src={totalImg} alt="Total" />
                 </header>
-                <strong>R$ 500,00</strong>
+                <strong>{new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                }).format(summary.total)}</strong>
             </div>
         </Container>
     )

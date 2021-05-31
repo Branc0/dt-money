@@ -10,7 +10,7 @@ export const Container = styled.div`
      background: var(--shape);
      padding: 1.5rem 2rem;
      border-radius: 0.25rem;
-     color: vertical-align(--text-title);
+     color: var(--text-title);
 
     header{
         display: flex;

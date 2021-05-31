@@ -90,4 +90,9 @@ button {
         filter: brightness(0.8)
     }
 }
+
+.highlight-background {
+    background: var(--green) !important;
+    color: #fff !important
+}
 `
